@@ -17,7 +17,6 @@ export default (
   message = RESPONSE_MESSAGES.ok,
   data = null,
 ) => {
-  console.log(Request)
   const responseObject: ResponseObject = {
     datetime: Date.now(),
     message,

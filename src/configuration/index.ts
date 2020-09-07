@@ -23,6 +23,17 @@ export const PORT = Number(Environment.PORT) || 2111;
 // Response messages
 export const RESPONSE_MESSAGES = {
   accessDenied: 'ACCESS_DENIED',
+  emailAddressIsAlreadyInUse: 'EMAIL_ADDRESS_IS_ALREADY_IN_USE',
   missingData: 'MISSING_DATA',
   ok: 'OK',
 };
+
+// Token providers
+export const TOKEN_PROVIDERS = {
+  desktop: 'desktop',
+  mobile: 'mobile',
+  web: 'web',
+};
+
+// Token secret
+export const { TOKEN_SECRET = 'super-secret' } = Environment;
