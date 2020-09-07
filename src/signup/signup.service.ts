@@ -22,11 +22,8 @@ export class SignupService {
    */
   async createUser(email: string, password: string): Promise<User> {
     // create a new User record
-    const seconds = Math.floor(Date.now() / 1000);
     const userRecord = new this.userModel({
-      email,
-      created: seconds,
-      updated: seconds,
+      email: email.toLowerCase(),
     });
 
     // hash the password
@@ -36,9 +33,7 @@ export class SignupService {
     const passwordRecord = new this.passwordModel({
       userId: userRecord._id,
       hash: hashedPassword,
-      created: seconds,
-      updated: seconds,
-    })
+    });
 
     // store everything  
     await Promise.all([
@@ -55,6 +50,6 @@ export class SignupService {
    * @returns {Promise<User|null>} 
    */
   async findExisting(email: string): Promise<User|null> {
-    return this.userModel.findOne({ email });
+    return this.userModel.findOne({ email: email.toLowerCase() });
   }
 };

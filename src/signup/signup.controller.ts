@@ -52,7 +52,7 @@ export class SignupController {
     }
 
     // create a new User and Password records
-    const User = await this.signupService.createUser(email, password);
+    const User = await this.signupService.createUser(trimmedEmail, trimmedPassword);
 
     // create a new JWT
     const token = await createToken(User._id, tp.web);

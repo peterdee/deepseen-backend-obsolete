@@ -9,11 +9,11 @@ export class Password extends Document {
   @Prop()
   hash: string;
 
-  @Prop()
-  created: number;
+  @Prop({ default: Date.now })
+  created: string;
 
-  @Prop()
-  updated: number;
+  @Prop({ default: Date.now })
+  updated: string;
 };
 
 export const PasswordSchema = SchemaFactory.createForClass(Password);

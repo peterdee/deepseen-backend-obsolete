@@ -6,17 +6,17 @@ export class User extends Document {
   @Prop()
   email: string;
 
-  @Prop()
+  @Prop({ default: false })
   desktopOnline: boolean;
 
-  @Prop()
+  @Prop({ default: false })
   mobileOnline: boolean;
 
-  @Prop()
-  created: number;
+  @Prop({ default: Date.now })
+  created: string;
 
-  @Prop()
-  updated: number;
+  @Prop({ default: Date.now })
+  updated: string;
 };
 
 export const UserSchema = SchemaFactory.createForClass(User);
