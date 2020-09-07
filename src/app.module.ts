@@ -1,13 +1,17 @@
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { DATABASE_CONNECTION_STRING } from './configuration';
+import { SignupController } from './signup/signup.controller';
+
+console.log('asdasdasd', DATABASE_CONNECTION_STRING)
 
 @Module({
-  imports: [ConfigModule.forRoot()],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    MongooseModule.forRoot(DATABASE_CONNECTION_STRING),
+  ],
+  controllers: [SignupController],
+  providers: [],
 })
 
 export class AppModule {};
