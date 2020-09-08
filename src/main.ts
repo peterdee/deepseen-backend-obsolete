@@ -16,7 +16,7 @@ async function bootstrap() {
       logger: true,
     }),
   );
-  
+
   app.register(helmet);
   
   // add a global prefix for the API routes

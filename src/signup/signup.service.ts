@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Password } from '../schemas/Password.schema';
 import { User } from '../schemas/User.schema';
-// import { CreateCatDto } from './dto/create-cat.dto';
 
 @Injectable()
 export class SignupService {

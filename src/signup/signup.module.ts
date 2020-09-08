@@ -10,12 +10,12 @@ import { User, UserSchema } from '../schemas/User.schema';
 @Module({
   imports: [MongooseModule.forFeature([
     {
-      name: User.name,
-      schema: UserSchema,
-    },
-    {
       name: Password.name,
       schema: PasswordSchema,
+    },
+    {
+      name: User.name,
+      schema: UserSchema,
     },
   ])],
   controllers: [SignupController],

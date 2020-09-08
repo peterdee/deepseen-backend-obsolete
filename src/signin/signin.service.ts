@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Password } from '../schemas/Password.schema';
 import { User } from '../schemas/User.schema';
-// import { CreateCatDto } from './dto/create-cat.dto';
 
 @Injectable()
 export class SigninService {
@@ -16,12 +15,12 @@ export class SigninService {
 
   /**
    * Compare password hashes
-   * @param {string} hash - hashed password
    * @param {string} password - plaintext password
+   * @param {string} hash - hashed password
    * @returns {Promise<boolean>}
    */
-  async compareHashes(hash: string, password: string): Promise<boolean> {
-    return compare(hash, password);
+  async compareHashes(password: string, hash: string): Promise<boolean> {
+    return compare(password, hash);
   }
 
   /**

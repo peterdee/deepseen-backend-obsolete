@@ -13,36 +13,40 @@ import {
   TOKEN_PROVIDERS as tp,
 } from '../configuration';
 import response from '../utilities/response';
-import { SignUpPayload } from './types';
+import { SignupPayload } from './types';
 import { SignupService } from './signup.service';
 
 @Controller('signup')
 export class SignupController {
-  constructor(
-    private signupService: SignupService,
-  ) {}
+  constructor(private signupService: SignupService) {}
 
   /**
    * Create a new user
-   * @param {SignUpPayload|null} body - request body 
+   * @param {SignupPayload|null} body - request body 
    * @param {*} req - request object 
    * @param {*} res - response object
    * @returns {Promise<void>}
    */
   @Post()
-  async handler(@Body() body: SignUpPayload | null, @Req() req, @Res() res): Promise<void> {
+  async handler(@Body() body: SignupPayload | null, @Req() req, @Res() res): Promise<void> {
     // check data
     if (!body) {
       return response(req, res, hc.badRequest, rm.missingData);
     }
-    const { email = '', password = '' }: SignUpPayload = body;
+    const { email = '', origin = '', password = '' }: SignupPayload = body;
     if (!(email && password)) {
       return response(req, res, hc.badRequest, rm.missingData);
     }
     const trimmedEmail = email.trim();
+    const trimmedOrigin = origin.trim();
     const trimmedPassword = password.trim();
     if (!(trimmedEmail && trimmedPassword)) {
       return response(req, res, hc.badRequest, rm.missingData);
+    }
+
+    // check origin
+    if (!Object.values(tp).includes(trimmedOrigin)) {
+      return response(req, res, hc.unauthorized, rm.accessDenied);
     }
 
     // check if email address is already in use
@@ -55,7 +59,7 @@ export class SignupController {
     const User = await this.signupService.createUser(trimmedEmail, trimmedPassword);
 
     // create a new JWT
-    const token = await createToken(User._id, tp.web);
+    const token = await createToken(User._id, trimmedOrigin);
 
     return response(
       req,

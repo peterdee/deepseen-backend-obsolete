@@ -65,7 +65,7 @@ export class SigninController {
     }
 
     // compare hashes
-    const isValid = await this.signinService.compareHashes(passwordRecord.hash, trimmedPassword);
+    const isValid = await this.signinService.compareHashes(trimmedPassword, passwordRecord.hash);
     if (!isValid) {
       return response(req, res, hc.unauthorized, rm.accessDenied);
     }

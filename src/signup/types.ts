@@ -1,4 +1,5 @@
-export interface SignUpPayload {
+export interface SignupPayload {
   email?: string;
+  origin?: string;
   password?: string;
 };
