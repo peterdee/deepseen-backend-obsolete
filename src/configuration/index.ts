@@ -25,7 +25,9 @@ export const RESPONSE_MESSAGES = {
   accessDenied: 'ACCESS_DENIED',
   emailAddressIsAlreadyInUse: 'EMAIL_ADDRESS_IS_ALREADY_IN_USE',
   missingData: 'MISSING_DATA',
+  missingToken: 'MISSING_TOKEN',
   ok: 'OK',
+  oldPasswordIsInvalid: 'OLD_PASSWORD_IS_INVALID',
 };
 
 // Token providers

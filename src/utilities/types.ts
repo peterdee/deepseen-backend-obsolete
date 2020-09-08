@@ -5,3 +5,8 @@ export interface ResponseObject {
   request: string;
   status: number | string;
 };
+
+export interface TokenPayload {
+  id?: number | string;
+  provider?: string;
+};

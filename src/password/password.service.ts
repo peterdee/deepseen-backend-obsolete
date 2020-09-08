@@ -1,15 +1,13 @@
-import { compare } from 'bcrypt';
-import { Model } from 'mongoose';
+import { compare, hash } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { Password } from '../schemas/Password.schema';
-import { User } from '../schemas/User.schema';
 
 @Injectable()
-export class SigninService {
+export class PasswordService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Password.name) private passwordModel: Model<Password>,
   ) {}
 
@@ -33,20 +31,29 @@ export class SigninService {
   }
 
   /**
-   * Find a User record by email
-   * @param {string} email - email address
-   * @returns {Promise<User|null>} 
+   * Create a password hash
+   * @param {string} password - plaintext password
+   * @returns {Promise<User>}
    */
-  async findUser(email: string): Promise<User|null> {
-    return this.userModel.findOne({ email: email.toLowerCase() });
+  async hashPassword(password: string): Promise<string> {
+    return hash(password, 10);
   }
 
   /**
-   * Find a User record by ID
-   * @param {string} id - User ID
-   * @returns {Promise<User|null>} 
+   * Update password
+   * @param {string} userId - User ID
+   * @param {string} hash - new Password hash
+   * @returns {Promise<void>} 
    */
-  async findUserByID(id: string): Promise<User|null> {
-    return this.userModel.findOne({ _id: id });
+  async updatePassword(userId: string, hash: string): Promise<void> {
+    return this.passwordModel.updateOne(
+      {
+        userId,
+      },
+      {
+        hash,
+        updated: `${Date.now()}`,
+      },
+    );
   }
 };

@@ -1,7 +1,7 @@
 import { hash } from 'bcrypt';
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { Password } from '../schemas/Password.schema';
 import { User } from '../schemas/User.schema';
@@ -9,8 +9,8 @@ import { User } from '../schemas/User.schema';
 @Injectable()
 export class SignupService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Password.name) private passwordModel: Model<Password>,
+    @InjectModel(User.name) private userModel: Model<User>,
   ) {}
 
   /**
