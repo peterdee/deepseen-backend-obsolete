@@ -30,8 +30,8 @@ export class PasswordController {
   @Post()
   async handler(
     @Body() body: ChangePasswordPayload | null,
-    @Req() req,
-    @Res() res,
+    @Req() req: any,
+    @Res() res: any,
   ): Promise<void> {
     // check data
     if (!body) {
@@ -48,7 +48,8 @@ export class PasswordController {
     }
 
     // find the Password record
-    const passwordRecord: Password = await this.passwordService.findPassword(req.id);
+    const { raw: { userId = '' } = {} } = req;
+    const passwordRecord: Password = await this.passwordService.findPassword(userId);
     if (!passwordRecord) {
       return response(req, res, hc.unauthorized, rm.accessDenied);
     }
@@ -64,7 +65,7 @@ export class PasswordController {
 
     // hash the new password and update the Password record
     const hashed = await this.passwordService.hashPassword(trimmedNewPassword);
-    await this.passwordService.updatePassword(req.id, hashed);
+    await this.passwordService.updatePassword(userId, hashed);
 
     return response(req, res);
   }

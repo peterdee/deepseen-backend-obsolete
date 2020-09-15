@@ -3,34 +3,26 @@
 
 A backend for the DeepSeen project
 
+DEV: http://localhost:2111
+
 ### Deploy
 
-```bash
-$ npm install
+```shell script
+git clone https://github.com/peterdee/deepseen-backend
+cd ./deepseen-backend
+nvm use 14
+npm i
 ```
 
 ### Launch
 
-```bash
-# development
-$ npm run start
+Development:
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```shell script
+npm run start:dev
 ```
 
-### Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+Production:
+```
+npm run start:prod
 ```

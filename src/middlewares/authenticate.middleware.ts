@@ -14,19 +14,33 @@ import { verifyToken } from '../utilities/jwt';
 export class Authenticate implements NestMiddleware {
   constructor(private readonly service: SigninService) {}
 
-  async use(req, res, next) {
+  async use(req: any, res: any, next: () => void) {
     try {
       // check if token is provided
-      const { 'x-token': token } = req.headers;
+      const { 'x-token': token = '' } = req.headers;
       if (!token) {
-        return response(req, res, hc.unauthorized, rm.missingToken);
+        return response(
+          req,
+          res,
+          hc.unauthorized,
+          rm.missingToken,
+          null,
+          true,
+        );
       }
 
       // decode the token
       const decoded = await verifyToken(token);
       const { id = '', provider = '' }: TokenPayload = decoded;
       if (!(id && provider && Object.values(tp).includes(provider))) {
-        return response(req, res, hc.unauthorized, rm.accessDenied);
+        return response(
+          req,
+          res,
+          hc.unauthorized,
+          rm.accessDenied,
+          null,
+          true,
+        );
       }
 
       // find User record
@@ -36,11 +50,18 @@ export class Authenticate implements NestMiddleware {
       }
       
       // proceed
-      req.id = user._id;
-      req.user =  user;
+      req.userId = user._id;
+      req.user = user;
       return next();
     } catch {
-      return response(req, res, hc.unauthorized, rm.accessDenied);
+      return response(
+        req,
+        res,
+        hc.unauthorized,
+        rm.accessDenied,
+        null,
+        true,
+      );
     }
   }
 };
