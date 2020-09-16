@@ -18,6 +18,7 @@ async function bootstrap() {
   );
 
   app.register(helmet);
+  app.enableCors();
   
   // add a global prefix for the API routes
   app.setGlobalPrefix('api');

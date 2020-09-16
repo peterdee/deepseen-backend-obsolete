@@ -1,26 +1,38 @@
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+
+import handleAuthenticate from './handlers/authenticate.handler';
 
 @WebSocketGateway()
 export class WebsocketsGateway {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    return from([1, 2, 3]).pipe(map(item => ({ event: 'events', data: item })));
+  @SubscribeMessage('connect')
+  handleConnection(@MessageBody() connection: any): void {
+    // handle authentication
+    connection.on(
+      'authenticate',
+      (token = '') => handleAuthenticate(connection, token),
+    );
+
+    // handle client disconnection
+    connection.on('disconnect', () => {
+      console.log('-- disconnect', connection.id);
+    });
   }
 
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    return data;
-  }
+  // @SubscribeMessage('authenticate')
+  // handleAuthenticate(@MessageBody() data: string): any {
+  //   console.log('-- authenticate', data);
+  //   return this.server.emit('authenticate', ({
+  //     info: 'OK',
+  //     status: 200,
+  //   }));
+  // }
 }
