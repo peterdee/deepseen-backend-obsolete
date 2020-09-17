@@ -24,6 +24,7 @@ export const PORT = Number(Environment.PORT) || 2111;
 export const RESPONSE_MESSAGES = {
   accessDenied: 'ACCESS_DENIED',
   emailAddressIsAlreadyInUse: 'EMAIL_ADDRESS_IS_ALREADY_IN_USE',
+  invalidToken: 'INVALID_TOKEN',
   missingData: 'MISSING_DATA',
   missingToken: 'MISSING_TOKEN',
   ok: 'OK',

@@ -12,6 +12,9 @@ export class User extends Document {
   @Prop({ default: false })
   mobileOnline: boolean;
 
+  @Prop({ default: false })
+  webOnline: boolean;
+
   @Prop({ default: Date.now })
   created: string;
 
