@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { UsersService } from '../users/users.service';
 import { User, UserSchema } from '../schemas/User.schema';
 import { WebsocketsGateway } from './websockets.gateway';
 
@@ -13,6 +12,6 @@ import { WebsocketsGateway } from './websockets.gateway';
       schema: UserSchema,
     },
   ])],
-  providers: [UsersService, WebsocketsGateway],
+  providers: [WebsocketsGateway],
 })
 export class WebsocketsModule {}

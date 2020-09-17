@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   MessageBody,
@@ -9,8 +8,8 @@ import {
 import { Model } from 'mongoose';
 import { Server } from 'socket.io';
 
-import events from '../configuration/events';
 import { Connection } from './types';
+import events from '../configuration/events';
 import {
   HTTP_CODES as hc,
   RESPONSE_MESSAGES as rm,
@@ -20,7 +19,6 @@ import { TokenPayload } from '../utilities/types';
 import { User } from '../schemas/User.schema';
 import { verifyToken } from '../utilities/jwt';
 
-@Injectable()
 @WebSocketGateway()
 export class WebsocketsGateway {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
@@ -113,5 +111,10 @@ export class WebsocketsGateway {
         );
       }
     );
+  }
+
+  @SubscribeMessage(events['m-next'])
+  handleMobileNext(client) {
+    console.log('client', client.id, this.connections.length);
   }
 }

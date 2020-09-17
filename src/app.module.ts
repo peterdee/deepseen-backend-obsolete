@@ -5,7 +5,6 @@ import { DATABASE_CONNECTION_STRING } from './configuration';
 import { PasswordModule } from './password/password.module';
 import { SignupModule } from './signup/signup.module';
 import { SigninModule } from './signin/signin.module';
-import { UsersModule } from './users/users.module';
 import { WebsocketsModule } from './websockets/websockets.module';
 
 @Module({
@@ -14,7 +13,6 @@ import { WebsocketsModule } from './websockets/websockets.module';
     PasswordModule,
     SigninModule,
     SignupModule,
-    UsersModule,
     WebsocketsModule,
   ],
   controllers: [],
